@@ -1,0 +1,71 @@
+Actividad 2.
+Procesos en Windows.
+Partimos de una máquina con sistema operativo MS Windows 10 o MS Windows 11 y abrimos la consola Administrador de tareas.
+
+BUSCAR>ADMINISTRADOR DE TAREAS>DETALLES
+
+NOTA: Acompañar las capturas de pantalla necesarias que muestren que se ha realizado:
+Abrir el programa Calculadora y Bloc de notas. Una vez abiertos, abrir el administrador de tareas e indicar el PID de cada uno.
+
+BUSCAR>NOTEPAD      => PID=22516
+BUSCAR>CALCULADORA  => PID=11696
+
+Ahora, desde la consola CMD buscar un comando que liste los procesos y confirmar que coincide el PID con el anterior.
+
+CMD>tasklist
+CalculatorApp.exe            11696
+notepad++.exe                22516
+
+Finalmente, desde la consola Powershell listar los procesos y filtrar para que solo se muestre primero la Calculadora y luego el Bloc de notas.
+
+BUSCAR>POWERSHEL>Get-Process                        => todos los procesos
+                 Get-Process -Name CalculatorApp    => 654      46    73380      77272       0,22  11696   7 CalculatorApp
+                 Get-Process -Name notepad++        => 441      32    74620      53204       0,34  22516   7 notepad++
+
+Procesos Linux
+Indica y explica brevemente su funcionamiento de al menos tres comandos Linux para la gestión de procesos.
+
+TERMINAL>   ps              => (process status) muestra una instantánea de los procesos actuales. Es muy útil para obtener información sobre los procesos que se están ejecutando en el sistema en un momento específico.
+            ps aux          => Muestra todos los procesos en el sistema junto con información detallada como el usuario, PID, porcentaje de uso de CPU y memoria, entre otros.
+            ps -ef          => Proporciona una lista más detallada de procesos, incluyendo información sobre el padre de cada proceso (PPID).
+            top             => Al ejecutarlo, muestra una interfaz interactiva donde se puede ver el uso de CPU y memoria por proceso, el tiempo de actividad del sistema, la carga promedio, entre otros.
+                q: Salir de top.
+                k: Terminar un proceso especificando su PID.
+                h: Mostrar ayuda y comandos adicionales.
+            kill PID:       => Envía la señal SIGTERM (terminar) al proceso con el PID especificado.
+            kill -9 PID:    => Envía la señal SIGKILL (matar) al proceso, forzando su terminación inmediata.
+            killall firefox
+
+
+Actividad 3
+Entra en la BIOS (seguramente sea UEFI) y muestra las opciones (instrucciones) de virtualización que tienes y habilítalas.
+Indica tu modelo de microprocesador y muestra cuales son los conjuntos de instrucciones de virtualización que tiene. Explica con tus palabras cuál es su función.
+NOTA: la captura de la BIOS la podéis realizar con el teléfono móvil.
+Actividad 4.
+Instalar una máquina con Windows Server en VirtualBox
+Instala VirtualBox 7 y el paquete Extension Pack.
+Instalar MS Windows Server 2022 Standard (GUI):
+Descarga la ISO correspondiente.
+Nombre máquina a crear: WS2023_SI_tuapellido1
+Memoria RAM de 2GB.
+Disco duro: 60GB
+Tarjeta de red: Modo NAT.
+Nombre usuario: “Apellido 1 del alumno”
+Instalar Guest Adittions.
+Logueate con tu usuario y cambia el nombre del equipo a “SI-tuapellido1”
+
+
+
+
+
+
+Actividad 5
+5.1 VirtualBox: Clonación
+Realiza una clonación enlazada de la MV anterior. Denomina a la MV clonada como “SI_tuapellido1_link”.
+Realiza una clonación completa de la MV anterior. Denomina a la MV clonada como “SI_tuapellido1_completa”.
+¿Qué diferencia existe entre ambos tipos de clonaciones? Indica las ventajas e inconvenientes de cada uno de ellos.
+5.2 VirtualBox: Instantáneas
+Crear una instantánea de tu máquina virtual y llámala “Recién Instalado Windows”. De esta forma, si en otra unidad de trabajo posterior, deja de funcionar esta máquina, podríamos restaurar la instantánea.
+5.3 VirtualBox: Hardware
+Finalmente, agrega un segundo disco a la máquina virtual original de 5GB. Desde el sistema operativo (consola “Administración de discos”) crea una unidad con la letra “E:” y formato NTFS.
+¿Aparece este segundo disco en las maquinas clonadas?
