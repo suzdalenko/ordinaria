@@ -41,8 +41,10 @@ Actividad 3
 Entra en la BIOS (seguramente sea UEFI) y muestra las opciones (instrucciones) de virtualización que tienes y habilítalas.
 Indica tu modelo de microprocesador y muestra cuales son los conjuntos de instrucciones de virtualización que tiene. Explica con tus palabras cuál es su función.
 NOTA: la captura de la BIOS la podéis realizar con el teléfono móvil.
+NO ESTA
+
 Actividad 4.
-Instalar una máquina con Windows Server en VirtualBox
+Instalar una máquina con Windows Server en VirtualBox > ERROR DE PRDOUCT KEY > HAY QUE BORRAR EN UBICACION > D:\i2\maquinas\WS2023_SI_suzdalenko\Snapshots Y QUITAR EL DISQUETE
 Instala VirtualBox 7 y el paquete Extension Pack.
 Instalar MS Windows Server 2022 Standard (GUI):
 Descarga la ISO correspondiente.
@@ -50,9 +52,10 @@ Nombre máquina a crear: WS2023_SI_tuapellido1
 Memoria RAM de 2GB.
 Disco duro: 60GB
 Tarjeta de red: Modo NAT.
-Nombre usuario: “Apellido 1 del alumno”
+Nombre usuario: “Apellido 1 del alumno”              > Agregar usuario > asuzdal1
 Instalar Guest Adittions.
 Logueate con tu usuario y cambia el nombre del equipo a “SI-tuapellido1”
+
 
 
 
