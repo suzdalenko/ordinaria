@@ -1,0 +1,164 @@
+Actividad 1. Windows: Administrador de Discos
+Para realizar esta actividad necesitas añadir DOS DISCOS (de 1GB. cada uno) en una máquina virtual con
+sistema operativo Windows (puedes usar un clon de la MV WS2022 de la primera tarea).
+
+Crea para cada uno de los dos discos (Disco1 y Disco2) el siguiente esquema de particiones:
+Disco1 1 GB
+Primaria NTFS O: tuapellidoP1A  500 MB.
+Primaria NTFS P: tuapellidoP2A  150 MB.
+Primaria NTFS Q: tuapellidoP3A  150 MB.
+Espacio SIN PARTICIONAR 
+
+ADMINISTRACION DE DISCOS || CREAR Y FORMATEAR PARTICIONES DEL DISCO DURO
+VER>SUPERIOR>LISTA DE DISCOS
+CONVIERTO EN MBR
+(MBR permite un máximo de cuatro particiones primarias.)(Tu disco tiene 2 TB o menos.)
+(GPT permite un número prácticamente ilimitado de particiones)(Tu disco es mayor de 2 TB)
+CLICK EN EL DISCO NEGRO ABAJO > NUEVO VOLUMEN SIMPLE>500>suzdalenkoPA1>15
+
+Disco2 1 GB
+Primaria NTFS R: tuapellidoP4B 150 MB. 
+Primaria NTFS S: tuapellidoP5B 150 MB. 
+Primaria NTFS T: tuapellidoP6B 150 MB. 
+Lógica NTFS U: tuapellidoL7B   200 MB. 
+Lógica NTFS V: tuapellidoL8B   250 MB
+
+ADMINISTRACION DE DISCOS || CREAR Y FORMATEAR PARTICIONES DEL DISCO DURO
+VER>SUPERIOR>LISTA DE DISCOS
+CONVIERTO EN MBR
+(MBR permite un máximo de cuatro particiones primarias.)(Tu disco tiene 2 TB o menos.)
+(GPT permite un número prácticamente ilimitado de particiones)(Tu disco es mayor de 2 TB)
+CLICK EN EL DISCO NEGRO ABAJO > NUEVO VOLUMEN SIMPLE>500>suzdalenkoPA1>15
+AL CREAR LA 4 PARTICION PRIMARIA (DISCO FORMATEADO MBR) se crea particion extendida
+AL CREAR LA 5 PARTICION PRIMARIA (DISCO FORMATEADO MBR) se crea particion extendida
+
+Comenta las capturas que aportes. Finalmente muestra la consola “Administración de discos” y el “Explorador
+de Windows” donde se pueda apreciar que has resuelto el supuesto práctico
+
+
+
+
+
+Actividad 2. Diskpart es una utilidad integrada en Windows que permite gestionar los discos y las particiones de forma
+avanzada mediante comandos CLI. Con Diskpart puedes crear, eliminar, formatear, convertir, asignar o
+reflejar volúmenes, entre otras opciones.
+Para realizar esta actividad necesitas añadir un nuevo disco duro en una máquina virtual con sistema operativo
+Windows (puedes usar un clon de la MV WS2022 de la primera tarea). Añade un disco de 5GB.
+El objetivo de la tarea es utilizar el comando DISKPART para particionar el disco anterior.
+Explica el procedimiento apoyándote en capturas de pantalla de todos los comandos utilizados junto con su
+significado.
+
+1. Lista los discos que tienes                                                  -> list disk
+2. Selecciona el disco que has creado 5gb.                                      -> select disk 3
+3. Muestra las propiedades del disco                                            -> detail disk
+4. Borra el disco                                                               -> clean
+5. Crea una tabla de particiones GPT.                                           -> convert gpt
+6. Crea el siguiente esquema de particiones     
+    J: gpt1 NTFS 1GB
+    L: gpt2 NTFS 1GB
+    M: gpt3 FAT32 1GB
+    N: gpt4 NTFS 1GB
+    P: gpt5 FAT32
+7. Muestra en el administrador de discos como quedan las particiones
+
+AÑADIR DISCO 5 GB
+CMD CON PERMISOS DE ADMINISTRADOR:
+    diskpart
+        list disk
+        select disk 3
+        detail disk         -> mostar propiedades del disco
+        clean               -> borramos informacion (particiones y etc..)
+        convert gpt         -> convertir en gpt (LO PRIMERO se puede tambien en mbr)
+
+        create partition primary size=1024
+        assign letter=J
+        format fs=ntfs label="gpt1" quick override
+        list partition
+        create partition primary size=1007
+        assign letter=P
+        format fs=fat label="gpt1" quick override
+        
+        list disk
+        select disk 3
+        clean               -> al crear todas las particiones, borro todo lo que hecho (DISCO 3 se queda limpio y sin formato ninguno)
+
+    (NTFS -> seguridad y archivos de mayor tamaño y recuperacion de errores, FAT -> sistema de archivos mas basico)
+
+8. Borra el disco                                                               -> clean -> al crear todas las particiones, borro todo lo que hecho (DISCO 3 se queda limpio y sin formato ninguno)
+9. Convierte la tabla de particiones a MBR
+10. Crea el siguiente esquema de particiones:
+    X: suzdalenko1NTFS 2 GB
+    Y: suzdalenko2 NTFS 1GB y Z: suzdalenko3 FAT32
+
+        X: suzdalenko1NTFS 2 GB
+            !!!para la primera particion repitimos los pasos de arriba: 
+            create patition primary size=2048
+            assign letter=X
+            format fs=ntfs label="suzdalenko1NTFS" quick override (despues de crear disco X:) creamos particion extendida
+
+        Y: suzdalenko2 NTFS 1GB y Z: suzdalenko3 FAT32
+            list disk
+            create partition extented size=3070
+            list partition                                          => !!! y se vera Particion 1 2048 Principal y Particion 0 Extendido 3070 !!!
+            create partition logical size=1024                      => !!! unidad logica color azul, lo de mas se pone VERDE
+            assign letter=Z                                         => unidad logica azul se asigna letra Z
+            format fs=fat label="suzdalenko3" quick override        => unidad logica azul suzdalenko3 (l)
+            create partition logical size=1024                      => !!! unidad logica color azul, lo de mas se pone VERDE
+            assign letter=L                                         => unidad logica azul se asigna letra L
+            format fs=fat label="suka3" quick override              => unidad logica azul suzdalenko3 (L)
+
+            list partition                                          : Principal, Extendido, Logico y Logico (4 particiones !!!)
+            select partition
+            assing letter=A
+
+11. Muestra en el administrador de discos como quedan las particiones
+12. Cambia la letra de la unidad Y: por T:
+13. Elimina la partición Z:
+14. Sal de Diskpart
+Explica los comandos más relevantes, demostrando que entiendes la realización.
+
+
+Actividad 3. GParted
+1. Partimos de una máquina virtual con sistemas operativo GNU/Linux Ubuntu Desktop 22.04.
+• Añade un (segundo) disco (10GB) con tabla de particiones MBR
+    AÑADO 1 DISCO 10 GB
+• Añade un (tercer) disco (5 GB) con tabla de particiones GPT.
+    AÑADO 1 DISCO 5 GB
+2. Instala la herramienta GParted.
+3. Herramienta GParted. Al disco (segundo) de 10 GB crea 5 particiones de 2 GB.
+• ¿Cuál es el nombre de cada una de las particiones?
+• ¿ha sucedido algo “raro”?
+4. Herramienta GParted. Al disco (tercero) de 5 GB crea dos particiones iguales que completen todo su
+tamaño.
+5. Herramienta Discos. Monta cada una de las particiones en /mnt/disk1 y /mnt/disk2.
+6. Cambia los permisos para que sean accesibles desde el usuario con el que estas logueado. Crea un par de
+ficheros de texto con el editor de texto nano y denomínalos apellido1.txt y apellido2.txt para
+demostrar que tienes permisos de escritura sobre las particiones recién creadas
+
+
+
+
+Actividad 4. Comandos GNU/Linux
+Partimos de una máquina virtual con sistemas operativo GNU/Linux Ubuntu Server 22.04. La tarea la
+realizaremos, por tanto. desde la terminal bash de Linux.
+Utiliza un usuario denominado tuapellido para realizar la tarea.
+$ sudo adduser tuapellido
+Agrégalo al grupo administradores (sudoers):
+# sudo usermod -aG sudo tuapellido
+Logueate o inicia sesión desde la terminal con el nuevo usuario:
+$ sudo login tuapellido
+Realiza las siguientes actividades utilizando la línea de comandos:
+1. Cambia el nombre del equipo1 a: si-apellido1
+2. Listar todos los archivos del directorio /bin que comiencen por grub en formato largo.
+3. Listar todos los archivos del directorio /dev que empiecen por tty y tengan 5 caracteres.
+4. Desde tu home (utiliza rutas relativas). Lista todos los archivos del directorio /dev que empiecen por tty
+y acaben en 1.
+5. Muestra el calendario del mes y del año de tu nacimiento.
+6. Comando find. Busca todos los archivos PDF de tu maquina Ubuntu que ocupen más de 2 MB.
+7. Comando find. Saca un listado de todos los archivos .txt de tu home.
+8. Crea en tu home un fichero listacompra.txt… introduce en él 20 alimentos (utiliza el editor nano):
+a. Comando grep. Muestra todas las líneas que tengan la palabra naranja.
+b. Comando grep. Muestra todas las líneas que tengan la palabra naranja (en mayúsculas o en
+minúsculas).
+c. Combinación de comandos. De los 5 últimos alimentos muestra solo los te tengan la palabra uva
+9. Apaga el equipo
