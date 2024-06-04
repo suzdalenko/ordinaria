@@ -120,20 +120,45 @@ Explica los comandos más relevantes, demostrando que entiendes la realización.
 
 Actividad 3. GParted
 1. Partimos de una máquina virtual con sistemas operativo GNU/Linux Ubuntu Desktop 22.04.
+    vboxuser no esta en el archivo sudoers
+    su > contraseña changeme
+    visudo > vboxuser ALL=(ALL:ALL) ALL
 • Añade un (segundo) disco (10GB) con tabla de particiones MBR
     AÑADO 1 DISCO 10 GB
 • Añade un (tercer) disco (5 GB) con tabla de particiones GPT.
     AÑADO 1 DISCO 5 GB
 2. Instala la herramienta GParted.
+    sudo apt-get update
+    sudo apt-get upgrade
+    sudo apt-get install gparted        mostrar discos existentes lsblk; sudo fdisk -l; sudo parted -l; df -h; sudo blkid
+                                        arriba seleccionamos el disco /dev/sdb/ 10Gb 
+                                            > button Device > Create Partition Table > seleccionamos MBR (msdos) >
+                                            > button Particion > Free space preceding 1, new size 2048, Primary Partition, File system ext4
+                                            > despues de crear 3 particiones PRIMARIAS empezamos a crear una particion EXTENDIDA y en ella una particiones LOGICAS
+                                                En una tabla de particiones MBR (msdos) podemos crear 4 particiones primarias o 3 primarias y una extendida.
+                                                Dentro de la partición extendida hemos creado las dos lógicas.      
+                                            > lo ultimo pulsar icono verde para que se ejecute > y despues se ven los cambios > lsblk
+
 3. Herramienta GParted. Al disco (segundo) de 10 GB crea 5 particiones de 2 GB.
 • ¿Cuál es el nombre de cada una de las particiones?
 • ¿ha sucedido algo “raro”?
 4. Herramienta GParted. Al disco (tercero) de 5 GB crea dos particiones iguales que completen todo su
-tamaño.
+tamaño. ECHO MAS ARRIBA
 5. Herramienta Discos. Monta cada una de las particiones en /mnt/disk1 y /mnt/disk2.
-6. Cambia los permisos para que sean accesibles desde el usuario con el que estas logueado. Crea un par de
-ficheros de texto con el editor de texto nano y denomínalos apellido1.txt y apellido2.txt para
+    primero creamos carpetas disk1 y disk2
+    cd /
+    cd /mnt
+    sudo mkdir disk1
+    sudo mkdir disk2
+    gnome-disk
+    busco aplicacion discos en buscador de ubuntu > discos > ajustes > editar las opciones de montaje > punto de montaje /mnt/disk1 (para disco de 5GB) > despues icono PLAY > Contenido ntfs montado en /mtn/disk1
+    despues para la segunda particion del disco 5GB cambio las opciones de montaje a /mnt/disk2 vuelvo y presiono enter, montandole ne /mnt/disk2 en lsblk veo que estan montados en /mnt/disk1 y /mnt/disk2
+
+6. Cambia los permisos para que sean accesibles desde el usuario con el que estas logueado. Crea un par de ficheros de texto con el editor de texto nano y denomínalos apellido1.txt y apellido2.txt para
 demostrar que tienes permisos de escritura sobre las particiones recién creadas
+    cambio permisos para que esten para mi
+    sudo chmod 777 /mnt/disk1
+    sudo chmod 777 /mnt/disk2
 
 
 
@@ -143,22 +168,39 @@ Partimos de una máquina virtual con sistemas operativo GNU/Linux Ubuntu Server 
 realizaremos, por tanto. desde la terminal bash de Linux.
 Utiliza un usuario denominado tuapellido para realizar la tarea.
 $ sudo adduser tuapellido
+    sudo adduser peterpan
 Agrégalo al grupo administradores (sudoers):
 # sudo usermod -aG sudo tuapellido
+    sudo usermod -aG sudo peterpan
 Logueate o inicia sesión desde la terminal con el nuevo usuario:
 $ sudo login tuapellido
+    sudo login peterpan
 Realiza las siguientes actividades utilizando la línea de comandos:
 1. Cambia el nombre del equipo1 a: si-apellido1
+    ubuntu mostrar nombre del equipo: hostname
+    sudo hostnamectl set-hostname peterpan01
 2. Listar todos los archivos del directorio /bin que comiencen por grub en formato largo.
+    ls -la /bin/grub*
 3. Listar todos los archivos del directorio /dev que empiecen por tty y tengan 5 caracteres.
-4. Desde tu home (utiliza rutas relativas). Lista todos los archivos del directorio /dev que empiecen por tty
-y acaben en 1.
+    ls -la /dev/tty??
+4. Desde tu home (utiliza rutas relativas). Lista todos los archivos del directorio /dev que empiecen por tty y acaben en 1.
+    ls /dev/tty*1
 5. Muestra el calendario del mes y del año de tu nacimiento.
+    sudo apt-install ncal
+    cal 8 1983
 6. Comando find. Busca todos los archivos PDF de tu maquina Ubuntu que ocupen más de 2 MB.
+    find . -name "*.pdf" -size +2M -type f
 7. Comando find. Saca un listado de todos los archivos .txt de tu home.
+    find . -name "*.txt" -type f
 8. Crea en tu home un fichero listacompra.txt… introduce en él 20 alimentos (utiliza el editor nano):
+    sudo touch listacompra.txt
+    sudo chmod 777 listacompra.txt
+    nano listacompra.txt
 a. Comando grep. Muestra todas las líneas que tengan la palabra naranja.
-b. Comando grep. Muestra todas las líneas que tengan la palabra naranja (en mayúsculas o en
-minúsculas).
+    grep naranja listacompra.txt
+b. Comando grep. Muestra todas las líneas que tengan la palabra naranja (en mayúsculas o en minúsculas).
+    grep -i naranja listacompra.txt
 c. Combinación de comandos. De los 5 últimos alimentos muestra solo los te tengan la palabra uva
+    tail -n 5 listacompra.txt | grep uva
 9. Apaga el equipo
+    sudo shutdown -h now
