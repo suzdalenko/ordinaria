@@ -1,0 +1,145 @@
+ENUNCIADO TAREA 5
+ACTIVIDAD 1. DISTRIBUCIONES LINUX
+Las distribuciones Linux son versiones del sistema operativo Linux que incluyen un conjunto de programas y aplicaciones específicos para diferentes necesidades y preferencias de los usuarios. Algunas de las distribuciones más populares son Ubuntu, Debian, Fedora, Mint y Arch Linux. Cada una de ellas tiene sus propias características, ventajas y desventajas, por lo que es importante conocerlas antes de elegir la más adecuada para cada caso.
+Instala una máquina virtual basada en la distribución Debian 12:
+1.	Configura el hardware de la máquina virtual como consideres oportuno justificándolo.
+    descargar ISO y intalar
+
+2.	Cambia el nombre de la máquina virtual para que quedes identificado.
+    en virtual vox antes de arrancarla
+
+3.	Inicia sesión con un usuario cuyo nick sea tu usuario de educantabria.
+    creo un usuario desde interface gracia y inicio la sesion con asuzdalenko01
+
+4.	¿Qué entorno de escritorio has instalado por defecto?
+    echo $XD_CURRENT_DESKTOP
+    GNOME (tendria que salir me; aun que me sale el vacio ?¿ nose porque)
+    > en settings > About > GNOME VESION 43.9
+
+5.	Desde la interfaz gráfica proporcionada crea un usuario cuyo nick sea tu nombre de pila.
+    > ya he creado un usuario desde Users
+
+6.	Ahora, desde la terminal, confirma que el nuevo usuario aparece el usuario recién creado en los archivos  /etc/passwd y /etc/shadow.
+    > cat /etc/passwd
+    > cat /etc/passwd | grep asuzdalenko01
+    > su
+    > cat /etc/shadow | grep asuzdalenko01
+
+7. Instalacion de netBeance
+    > Instalamos el gestor de paquetes snap para hacer la instalación a través de el, en lugar de hacer con apt
+    > apt install snapd !!!
+    > snap install core !!!
+    > snap install openjdk
+    > snap install netbeans --classic
+    > sudo apt install default-jdk
+    > snap run netbeans !!! por fin se inicia !!!
+
+
+
+
+ACTIVIDAD 2. INSTALACION DE SOFTWARE
+En esta actividad realizaremos la instalación de software en un sistema operativos Linux, tanto desde la “Tienda”, modo gráfico, como desde la línea de comandos.
+Partimos de una maquina virtual Ubuntu Desktop 22.04. Antes de realizar una instalación se ejecuta desde la shell los comandos para actualizar los repositorios, el software y el sistema operativo.
+    > sudo apt update
+    > sudo apt upgrade
+    > sudo apt dist-upgrade
+    > sudo apt autoremove
+
+1.	Desde “Ubuntu Software” instala el programa MySQL Workbench. Una vez instalado agrégalo a favoritos.
+    > sudo snap install mysql-workbench-community
+    > mysql-workbench-community     (es una especie de heydi SQL)
+
+2.	Desde la “terminal” (bash), instala el servicio MariaDB para que nuestra maquina funcione como un servidor de base de datos.
+    sudo apt install mariadb-server
+    sudo systemctl start mariadb
+    sudo systemctl enable mariadb
+    sudo systemctl status mariadb
+    sudo mysql_secure_installation (seteamos contraseña para usuario root)
+
+3.	Desde el cliente “MySQL Workbench” conéctate al servidor MariaDB local y muestra la pantalla “Server Status”.
+    > mysql-workbench-community (botom +)
+    > ingreso contraseña "changeme"
+
+
+
+
+ACTIVIDAD 3. GESTIÓN DE ARCHIVOS Y CARPETAS MEDIANTE COMANDOS.
+Partimos de una maquina virtual Ubuntu Server 22.04. Desde la terminal:
+1. Crea una carpeta llamada "prueba" en tu directorio personal.
+    mkdir /home/asuzdalenko01/prueba
+
+2. Copia el archivo "/etc/passwd" a la carpeta "prueba" con el nombre "usuarios" utilizando rutas absolutas.
+    cp /etc/passwd /home/asuzdalenko01/prueba/usuarios
+
+3. Cambia los permisos del archivo "usuarios" para que solo tú puedas leerlo y modificarlo.
+    sudo chmod 600 /home/asuzdalenko01/prueba/usuarios
+    !!! chmod 600: El propietario puede leer y escribir, nada más para nadie !!!
+
+4. Muestra el contenido del archivo "usuarios" por pantalla.
+    cat /home/asuzdalenko01/prueba/usuarios
+
+5. Crea un archivo vacío llamado "nuevo" en la carpeta "prueba".
+    sudo touch /home/asuzdalenko01/prueba/nuevo
+
+6. Escribe tu nombre y apellidos en el archivo "nuevo".
+    nano nuevo
+
+7. Muestra el tamaño del archivo "nuevo" en bytes.
+    du -b nuevo
+    stat -c %s nuevo
+
+8. Renombra el archivo "nuevo" como "datos".
+    mv nuevo datos  !!! movemos  ficheros  de  un  directorio  a  otro,  pero  también  nos permite renombrarlos !!!
+
+9. Mueve el archivo "datos" a tu directorio personal utilizando rutas absolutas.
+    mv datos /home/asuzdalenko01
+
+10. Borra la carpeta "prueba" y todo su contenido utilizando rutas relativas.
+    rm -r prueba (cuando estoy en /home/asuzdalenko01) 
+
+
+
+
+ACTIVIDAD 4. USUARIOS, GRUPOS Y PERMISOS EN LINUX
+Desde una máquina virtual Ubuntu Server 22.04, realiza:
+1. Crea un usuario llamado “alumno” con contraseña “12342 y asígnale el grupo primario “estudiantes”.
+2. Crea un grupo llamado “profesores” y añade al usuario “root” a ese grupo.
+3. Crea un directorio llamado “clase” en el directorio raíz (`/`) y cambia el propietario a “alumno” y el grupo a “profesores”.
+4. Cambia los permisos del directorio “clase” para que solo el propietario pueda leer, escribir y ejecutar, el grupo pueda leer y ejecutar, y el resto no tenga ningún permiso.
+5. Crea un archivo llamado “notas.txt” dentro del directorio “clase” con el contenido “Aprobado” y cambia el propietario a “root” y el grupo a “estudiantes”.
+6. Cambia los permisos del archivo “notas.txt” para que solo el propietario pueda leer y escribir, el grupo pueda leer, y el resto no tenga ningún permiso.
+7. Crea un enlace simbólico llamado “resultado” en el directorio personal de “alumno” que apunte al archivo “notas.txt”.
+8. Crea un enlace duro llamado “copia” en el directorio personal de “root” que apunte al archivo “notas.txt”.
+9. Borra el archivo “notas.txt” y comprueba si los enlaces siguen funcionando. Explica.
+10. Cambia la contraseña de “alumno” a “4321” y borra el usuario y su directorio personal.
+11. Muestra tus usuarios en el fichero /etc/passwd. ¿Qué UID tienen asignados?
+12. Muestra tus grupos en el fichero /etc/group. ¿Qué UID tienen asignados?
+
+
+
+
+ACTIVIDAD 5. PERSONALIZACIÓN DE LA CONFIGURACIÓN DE LOS USUARIOS.
+Partimos de una maquina virtual Ubuntu Server 22.04. Realiza y explica todos los cambios que debes realizar para que el “home” de los nuevos usuarios que se creen en ella su carpeta personal sea “/usuarios” en lugar de “/home” que es la que viene por defecto.
+https://manpages.ubuntu.com/manpages/trusty/es/man5/adduser.conf.5.html
+
+
+
+
+
+ACTIVIDAD 6. PERMISOS LINUX
+¿Cómo sería la cadena de permisos del fichero prueba tras ejecutar secuencialmente los siguientes comandos? Rellena los huecos.
+$ chmod 640 prueba
+-	r	w	x	r	w	x	r	w	x
+-									
+
+$ chmod a=rw prueba
+-	r	w	x	r	w	x	r	w	x
+-									
+
+$ chmod go-w prueba
+-	r	w	x	r	w	x	r	w	x
+-									
+
+$ chmod u+x,g+w prueba
+-	r	w	x	r	w	x	r	w	x
+-									

@@ -1,0 +1,18 @@
+RappelKilo = 
+SWITCH(
+    TRUE(),
+    MIN('ventas-nedco'[NOMBRE_CLIENTE]) IN {"LA DARSENA DEL PESCADOR"},
+        SWITCH(
+            TRUE(),
+            MIN('ventas-nedco'[Kg]) >= 0 && MIN('ventas-nedco'[Kg]) <= 4000, 0.02,
+            MIN('ventas-nedco'[Kg]) > 4000 && MIN('ventas-nedco'[Kg]) <= 6000, 0.03,
+            MIN('ventas-nedco'[Kg]) > 6000 && MIN('ventas-nedco'[Kg]) <= 8000, 0.04,
+            MIN('ventas-nedco'[Kg]) > 8000, 0.05
+        ),
+    BLANK()
+)
+if MIN('ventas-nedco[NOMBRE_CLIENTE]') = 'HIPODROMO'
+    // condiciones
+
+if MIN('ventas-nedco[NOMBRE_CLIENTE]')  = 'BNS'
+    // condiciones

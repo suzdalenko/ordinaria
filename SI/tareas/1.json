@@ -52,7 +52,7 @@ Nombre máquina a crear: WS2023_SI_tuapellido1
 Memoria RAM de 2GB.
 Disco duro: 60GB
 Tarjeta de red: Modo NAT.
-Nombre usuario: “Apellido 1 del alumno”              > Agregar usuario > asuzdal1
+Nombre usuario: “Apellido 1 del alumno”              > Agregar, editar o eliminar otros usuarios > asuzdal1
 Instalar Guest Adittions.
 Logueate con tu usuario y cambia el nombre del equipo a “SI-tuapellido1”
 
@@ -65,10 +65,33 @@ Logueate con tu usuario y cambia el nombre del equipo a “SI-tuapellido1”
 Actividad 5
 5.1 VirtualBox: Clonación
 Realiza una clonación enlazada de la MV anterior. Denomina a la MV clonada como “SI_tuapellido1_link”.
-Realiza una clonación completa de la MV anterior. Denomina a la MV clonada como “SI_tuapellido1_completa”.
+    > Clonar (ws01 clonacion ENLAZADA) > Clonacion enlazada > Y 1 segundo y esta echa
+
+Realiza una clonación completa de la MV anterior. Denomina a la MV clonada como “SI_tuapellido1_completa”
+    > Clonar (ws01 clonacion COMPLETA) > Clonacion completa > Y tarda un tiempo
+
 ¿Qué diferencia existe entre ambos tipos de clonaciones? Indica las ventajas e inconvenientes de cada uno de ellos.
+    La clonación enlazada implica crear una MV que comparte la mayoría de su contenido con una  MV "original". 
+    Esto ahorra espacio en disco ya que las  MVs enlazadas solo almacenan las diferencias o cambios realizados en 
+    relación con la VM original. Las ventajas incluyen: 
+    ▪ Eficiencia en el uso de almacenamiento. 
+    ▪ Rápida creación de MVs. 
+    ▪ Menor consumo de recursos, en general. 
+    Sin embargo, las desventajas son: 
+    ▪ Dependen de la MV original y cualquier cambio en esta puede afectar a todas las MVs enlazadas... 
+    ▪ ... puede causar problemas de compatibilidad o seguridad. 
+
 5.2 VirtualBox: Instantáneas
-Crear una instantánea de tu máquina virtual y llámala “Recién Instalado Windows”. De esta forma, si en otra unidad de trabajo posterior, deja de funcionar esta máquina, podríamos restaurar la instantánea.
+Crear una instantánea de tu máquina virtual y llámala “Recién Instalado Windows”. 
+De esta forma, si en otra unidad de trabajo posterior, deja de funcionar esta máquina, podríamos restaurar la instantánea.
+    Hamburgesa > Instantaneas > Icono instantanea > Tomar (nombre)
+    
 5.3 VirtualBox: Hardware
 Finalmente, agrega un segundo disco a la máquina virtual original de 5GB. Desde el sistema operativo (consola “Administración de discos”) crea una unidad con la letra “E:” y formato NTFS.
+    > agrego disco a la maquina ws01 5GB >
+    > en administacion de discos tengo que hacer que sea usable 
+        (CREAR Y FORMATEAR PARTICIONES DEL DISCO DURO formatear)
+
+
 ¿Aparece este segundo disco en las maquinas clonadas?
+    NO.
