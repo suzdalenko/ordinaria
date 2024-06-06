@@ -103,8 +103,17 @@ Partimos de una maquina virtual Ubuntu Server 22.04. Desde la terminal:
 ACTIVIDAD 4. USUARIOS, GRUPOS Y PERMISOS EN LINUX
 Desde una máquina virtual Ubuntu Server 22.04, realiza:
 1. Crea un usuario llamado “alumno” con contraseña “12342 y asígnale el grupo primario “estudiantes”.
+    sudo adduser alumno                 !!! crear alumno
+    sudo addgroup estudiantes           !!! crear grupo estudiantes
+    sudo usermod -aG estudiantes alumno !!! añado el alumno a los estudiantes !!! El comando usermode modifica los parámetros de un usuario, al añadir la opción -aG añade el usuario a un grupo sin afectar al resto de grupos a los que pertenece este usuario
+
 2. Crea un grupo llamado “profesores” y añade al usuario “root” a ese grupo.
+    sudo groupadd procesores
+    sudo usermod -aG procesores root
+
 3. Crea un directorio llamado “clase” en el directorio raíz (`/`) y cambia el propietario a “alumno” y el grupo a “profesores”.
+
+
 4. Cambia los permisos del directorio “clase” para que solo el propietario pueda leer, escribir y ejecutar, el grupo pueda leer y ejecutar, y el resto no tenga ningún permiso.
 5. Crea un archivo llamado “notas.txt” dentro del directorio “clase” con el contenido “Aprobado” y cambia el propietario a “root” y el grupo a “estudiantes”.
 6. Cambia los permisos del archivo “notas.txt” para que solo el propietario pueda leer y escribir, el grupo pueda leer, y el resto no tenga ningún permiso.
