@@ -110,18 +110,59 @@ Desde una máquina virtual Ubuntu Server 22.04, realiza:
 2. Crea un grupo llamado “profesores” y añade al usuario “root” a ese grupo.
     sudo groupadd procesores
     sudo usermod -aG procesores root
+    groups                              !! mostrar grupos del ususario actual
+    getent passwd, cat /etc/passwd,     !! mostrar grupos
+    getent group estudiantes            !! mostar los usuarios que estan en grupo estudiantes
 
-3. Crea un directorio llamado “clase” en el directorio raíz (`/`) y cambia el propietario a “alumno” y el grupo a “profesores”.
-
+3. Crea un directorio llamado “clase” en el directorio raíz (`/`) y cambia el propietario a “alumno” y el grupo a “profesores”
+    sudo mkdir /clase
+    sudo chown alumno:procesores /clase
 
 4. Cambia los permisos del directorio “clase” para que solo el propietario pueda leer, escribir y ejecutar, el grupo pueda leer y ejecutar, y el resto no tenga ningún permiso.
-5. Crea un archivo llamado “notas.txt” dentro del directorio “clase” con el contenido “Aprobado” y cambia el propietario a “root” y el grupo a “estudiantes”.
+    sudo chmod 750 /clase   !! 7 para el propietario: Significa permisos de lectura, escritura y ejecución (rwx).
+                            !! 5 para el grupo: Significa permisos de lectura y ejecución (r-x).
+                            !! 0 para otros: Significa que no tienen permisos (---).
+
+5. Crea un archivo llamado “notas.txt” dentro del directorio “clase” con el contenido “Aprobado” y cambia el propietario a “asuzdalenko01” y el grupo a “estudiantes”.
+    sudo touch notas.txt
+    sudo chown asuzdalenko01:estudiantes notas.txt !!!
+
 6. Cambia los permisos del archivo “notas.txt” para que solo el propietario pueda leer y escribir, el grupo pueda leer, y el resto no tenga ningún permiso.
-7. Crea un enlace simbólico llamado “resultado” en el directorio personal de “alumno” que apunte al archivo “notas.txt”.
+    sudo chmod 640 notas.txt
+                                                    6 para el propietario: Lectura y escritura (rw-).
+                                                    4 para el grupo: Solo lectura (r--).
+                                                    0 para otros: Sin permisos (---).
+        0 - Sin permisos (---)
+        1 - Ejecución (--x)
+        2 - Escritura (-w-)
+        3 - Escritura y ejecución (-wx)
+        4 - Lectura (r--)
+        5 - Lectura y ejecución (r-x)
+        6 - Lectura y escritura (rw-)
+        7 - Lectura, escritura y ejecución (rwx)
+        (EN LINUX EL ARCHIVO PUEDE SER DE UN UNICO GRUPO Y DE UN UNICO USUARIO)
+
+7. Crea un enlace simbólico llamado “resultado” en el directorio personal de “asuzdalenko01” que apunte al archivo “notas.txt”.
+    ln -s notas.txt /home/asuzdalenko01/resultado
+
 8. Crea un enlace duro llamado “copia” en el directorio personal de “root” que apunte al archivo “notas.txt”.
+    sudo ln notas.txt /root/copia
+    sudo ls /root/copia
+
 9. Borra el archivo “notas.txt” y comprueba si los enlaces siguen funcionando. Explica.
+    sudo rm /clase/notas.txt    !!! Los enlaces duros siguen funcionando después de que se elimina el archivo original, pero los enlaces simbólicos no funcionan.
+    sudo ls /root/copia         !!! Al borrar el archivo "notas.txt", el enlace simbólico "resultado" sigue apareciendo por pantalla, pero si queremos 
+                                    acceder a él dará error porque el archivo original ya no existe. Por otro lado, en el enlace duro “copia” no muestra 
+                                    el enlace con “notas.txt”,  porque  al  borrar  el  archivo  original  ya  no  lo  relaciona,  pero  se  podría  acceder  a  él, 
+                                    aunque el archivo original no exista
+
 10. Cambia la contraseña de “alumno” a “4321” y borra el usuario y su directorio personal.
+    sudo passwd alumno  !!! cambiamos contraseña de usuario alumno
+    userdel -r alumno   !!! utilizamos el comando userdel [opciones] usuario y con la opción -r borra todo rastro de directorio personal del usuario eliminado
+
 11. Muestra tus usuarios en el fichero /etc/passwd. ¿Qué UID tienen asignados?
+    cat /etc/passwd
+
 12. Muestra tus grupos en el fichero /etc/group. ¿Qué UID tienen asignados?
 
 

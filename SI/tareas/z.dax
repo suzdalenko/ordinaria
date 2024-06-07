@@ -1,18 +1,140 @@
 RappelKilo = 
-SWITCH(
-    TRUE(),
-    MIN('ventas-nedco'[NOMBRE_CLIENTE]) IN {"LA DARSENA DEL PESCADOR"},
-        SWITCH(
-            TRUE(),
-            MIN('ventas-nedco'[Kg]) >= 0 && MIN('ventas-nedco'[Kg]) <= 4000, 0.02,
-            MIN('ventas-nedco'[Kg]) > 4000 && MIN('ventas-nedco'[Kg]) <= 6000, 0.03,
-            MIN('ventas-nedco'[Kg]) > 6000 && MIN('ventas-nedco'[Kg]) <= 8000, 0.04,
-            MIN('ventas-nedco'[Kg]) > 8000, 0.05
-        ),
-    BLANK()
-)
-if MIN('ventas-nedco[NOMBRE_CLIENTE]') = 'HIPODROMO'
-    // condiciones
+    VAR FamiliaExcluida = MIN('ventas-nedco'[DESCRIPCION_FAMILIA]) IN {"VERDURA", "PAN Y REPOSTERIA"}
+    VAR Cliente         = MIN('ventas-nedco'[NOMBRE_CLIENTE])
+    VAR ClienteId       = MIN('ventas-nedco'[CLIENTE])
+   
+RETURN
+    SWITCH(
+        TRUE(),
+        NOT FamiliaExcluida && (ClienteId = "4300017272" || Cliente = "LA SURFERIA"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 4500 && [C/R Kg] <= 5500, 0.40,
+                [C/R Kg]  > 5500 && [C/R Kg] <= 6500, 0.45,
+                [C/R Kg]  > 6500, 0.50,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300001170" || Cliente = "RTE. EL PAJARO AMARILLO"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 10000  && [C/R Kg] <= 12000, 0.20,
+                [C/R Kg]  > 12000  && [C/R Kg] <= 14000, 0.25,
+                [C/R Kg]  > 14000, 0.30,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300004192" || Cliente = "RESTAURANTE MERON"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 4000  && [C/R Kg] <= 5000, 0.20,
+                [C/R Kg]  > 5000  && [C/R Kg] <= 6000 , 0.25,
+                [C/R Kg]  > 6000, 0.30,
+                BLANK()
+            ),    
+        NOT FamiliaExcluida && (ClienteId = "4300058195" || Cliente = "RESTAURANTE LA OSTRERIA"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 7000  && [C/R Kg] <= 8000, 0.27,
+                [C/R Kg]  > 8000  && [C/R Kg] <= 9000 , 0.30,
+                [C/R Kg]  > 9000, 0.35,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300017254" || Cliente = "RESTAURANTE NUEVO BALNEARIO"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 3500  && [C/R Kg] <= 4500, 0.3,
+                [C/R Kg]  > 4500  && [C/R Kg] <= 5500 , 0.4,
+                [C/R Kg]  > 5500, 0.45,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300016031" || Cliente = "FUNDACION ASILO DE TORRELAVEGA"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 35000  && [C/R Kg] <= 40000, 0.3,
+                [C/R Kg]  > 40000  && [C/R Kg] <= 45000, 0.4,
+                [C/R Kg]  > 45000, 0.5,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300013149" || Cliente = "TABERNA DEL BUDHA"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 3000  && [C/R Kg] <= 3500, 0.06,
+                [C/R Kg]  > 3500  && [C/R Kg] <= 4000, 0.08,
+                [C/R Kg]  > 4000  && [C/R Kg] <= 4500, 0.10,
+                [C/R Kg]  > 4500, 0.15,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300020199" || Cliente = "BODEGAS MAZON"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 2000  && [C/R Kg] <= 2500, 0.08,
+                [C/R Kg]  > 2500  && [C/R Kg] <= 3000, 0.10,
+                [C/R Kg]  > 3000, 0.12,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300014387" || Cliente = "CTRO. HOSPITALARIO PADRE MENNI"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 15000  && [C/R Kg] <= 18000, 0.06,
+                [C/R Kg]  > 18000  && [C/R Kg] <= 20000, 0.09,
+                [C/R Kg]  > 20000, 1.12,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "4300058568" || Cliente = "A MI MANERA"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 7000  && [C/R Kg] <= 7500, 0.12,
+                [C/R Kg]  > 7500  && [C/R Kg] <= 8000, 0.15,
+                [C/R Kg]  > 8000, 1.18,
+                BLANK()
+            ),
+        NOT FamiliaExcluida && (ClienteId = "BNS" || Cliente = "BNS"),
+            SWITCH(
+                TRUE(),
+                [C/R Kg] >= 7000  && [C/R Kg] <= 7500, 0.9,
+                [C/R Kg]  > 7500  && [C/R Kg] <= 8000, 0.12,
+                [C/R Kg]  > 8000, 0.15,
+                BLANK()
+            ),
+        BLANK()
+    )    
 
-if MIN('ventas-nedco[NOMBRE_CLIENTE]')  = 'BNS'
-    // condiciones
+-------- bien ------------
+C/R Kg = CALCULATE(
+    SUM('ventas-nedco'[Kg]), NOT 'ventas-nedco'[DESCRIPCION_FAMILIA] IN {"VERDURA", "PAN Y REPOSTERIA"}
+)
+
+C/R €/Kg = 
+ IF(ISBLANK([RappelKilo]),
+     BLANK(),
+     DIVIDE(
+     CALCULATE(
+        SUM('ventas-nedco'[IMPORTE]), NOT 'ventas-nedco'[DESCRIPCION_FAMILIA] IN {"VERDURA", "PAN Y REPOSTERIA"}
+     ),
+     CALCULATE(
+        SUM('ventas-nedco'[KG]), NOT 'ventas-nedco'[DESCRIPCION_FAMILIA] IN {"VERDURA", "PAN Y REPOSTERIA"}
+     ),
+     0)                              - [RappelKilo]
+ )
+
+C/R Importe = 
+    IF(
+        ISBLANK([C/R €/Kg]),                    
+        BLANK(),      
+        [C/R Kg] * [C/R €/Kg]
+    )
+
+C/R Mg €/Kg = 
+    VAR importeSinFamilias = CALCULATE( SUM('ventas-nedco'[IMPORTE]), NOT 'ventas-nedco'[DESCRIPCION_FAMILIA] IN {"VERDURA", "PAN Y REPOSTERIA"} )
+RETURN 
+    [C/R Importe] * [Mg €/Kg] / importeSinFamilias
+
+
+
+
+
+
+---------------------------
+
+C/R BENEFICIO = [BENEFICIO] * [C/R Importe] / [Importe.]
+
+BENEFICIO = SUMX('ventas-nedco', [IMPORTE] * [MARGEN] / 100)
