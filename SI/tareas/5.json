@@ -164,32 +164,64 @@ Desde una máquina virtual Ubuntu Server 22.04, realiza:
     cat /etc/passwd
 
 12. Muestra tus grupos en el fichero /etc/group. ¿Qué UID tienen asignados?
+    cat /etc/group
+    los UID son los numeros que hay en el fichero /etc/passwd
 
 
 
 
 ACTIVIDAD 5. PERSONALIZACIÓN DE LA CONFIGURACIÓN DE LOS USUARIOS.
-Partimos de una maquina virtual Ubuntu Server 22.04. Realiza y explica todos los cambios que debes realizar para que el “home” de los nuevos usuarios que se creen en ella su carpeta personal sea “/usuarios” en lugar de “/home” que es la que viene por defecto.
-https://manpages.ubuntu.com/manpages/trusty/es/man5/adduser.conf.5.html
-
-
-
-
+Partimos de una maquina virtual Ubuntu Server 22.04.
+Realiza y explica todos los cambios que debes realizar para que el “home” de los nuevos usuarios que se creen en ella su carpeta personal 
+sea “/usuarios” en lugar de “/home” que es la que viene por defecto.
+    > Para cambiar la ubicación predeterminada del directorio home de los nuevos usuarios realizamos los siguientes cambios en la configuración del sistema
+    > sudo mkdir /usuarios
+    > Establecer los permisos adecuados para que los usuarios puedan leer, escribir y ejecutar archivos en su directorio personal.
+    > sudo chmod 755 /usuarios (7-propietarios permisos completos, 5-permisos leer y ejecutar(para el grupo), 5-leer y ejecutar para el resto)
+    > En resumen, este comando da al propietario del directorio "/usuarios" permisos completos para leer, escribir y ejecutar, mientras que los otros usuarios solo pueden leer y ejecutar.
+    > sudo nano /etc/default/useradd > # HOME=/usuarios
+    > sudo nano /etc/adduser.conf    > DHOME=/usuarios
+    > reboot y el usuario se crea en /usuarios
 
 ACTIVIDAD 6. PERMISOS LINUX
 ¿Cómo sería la cadena de permisos del fichero prueba tras ejecutar secuencialmente los siguientes comandos? Rellena los huecos.
 $ chmod 640 prueba
--	r	w	x	r	w	x	r	w	x
--									
+-	r	w	x	r	w	x	r	w	x (r-read-lectura, w-write-escritura, x-execute-ejecuccion)
+-   r   w   -   r   -   -   -   -   - 
 
 $ chmod a=rw prueba
 -	r	w	x	r	w	x	r	w	x
--									
+-	r	w       r	w		r	w						
+    > el comando sudo chmod a=rw mi.txt configura los permisos del archivo mi.txt de manera que todos los usuarios
 
 $ chmod go-w prueba
 -	r	w	x	r	w	x	r	w	x
--									
+-	r   w   -   r   -   -   r	-	-						
+    > quita el permiso de escritura para los usuarios que pertenecen al grupo del archivo y para los otros usuarios que no son el propietario ni pertenecen al grupo
+    > el propietario del archivo sigue teniendo sus permisos sin cambios
 
 $ chmod u+x,g+w prueba
+    > para ver bien los cambios cambio a sudo chmod 000 mi.txt ------------
+    > despues chmod u+x,g+w mi.txt
 -	r	w	x	r	w	x	r	w	x
--									
+-	-   -   x   -   w   -   -   -   -
+    > Activa el permiso de ejecución para el propietario y el de escritura para el grupo.
+
+
+
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
+    sk-proj-v2vtnC0UU2gDRigQvuqsT3BlbkFJTa5zgMzXXIsm1rDJCM6H
