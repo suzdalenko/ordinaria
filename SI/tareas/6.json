@@ -1,0 +1,134 @@
+ENUNCIADO TAREA 6
+“Según un estudio realizado por FreeBSD en 2021, alrededor del 96,3% del millón de
+servidores más importantes del mundo se ejecutan en el sistema operativo Linux¹. Esto
+muestra la popularidad y la confiabilidad de Linux en el entorno de los servidores.”
+
+Salvo la actividad 3 (que es teórica), el resto lo realizaremos con Ubuntu Server 22.04. Es importante que nos
+familiaricemos con ese entorno de trabajo, ya que es el que nos vamos a encontrar después en la empresa.
+
+
+
+
+ACTIVIDAD 1. USUARIOS Y GRUPOS
+Partimos de una MV con Ubuntu Server 22-04:
+1. Crea un usuario denominado tu-nick-educantabria. Agrégalo al grupo de sudoers (administradores), si aún no lo has hecho. Inicia sesión con él.
+    > sudo adduser suzdal01
+    > sudo su
+    > sudo visudo > suzdal01 ALL=(ALL:ALL) ALL
+    > su suzdal01
+
+2. Crea el usuario trabajador1 cuya shell de inicio de sesión sea /bin/sh. Inicia sesión con él y confirma que no accede al bash.
+    > sudo adduser --shell /bin/sh trabajador1
+    > grep trabajador1 /etc/passwd (trabajador1:x:1011:1013:,,,:/usuarios/trabajador1:/bin/sh el trabajador tiene el bash desactivado)
+
+3. Crea el usuario trabajador2 y NO pueda loguearse. Muestra su UID.
+    > sudo adduser --disabled-login trabajador
+    > id -u trabajador2
+
+4. Crea el grupo informatica. Agrega los tres usuarios anteriores al grupo
+    > sudo addgroup informatica
+    > sudo adduser suzdal01 informatica
+    > sudo adduser trabajador1 informatica
+    > sudo adduser trabajador2 informatica
+
+5. Muestra el UID del usuario tu-nick-educantabria y los grupos a los que pertenece.
+    > id suzdal01
+    > id trabajador1
+    > id trabajador2
+
+6. Crea el usuario trabajador3, cuyo “home” sea /usuarios/trabajador3 y pertenezca al grupo informática. Hazlo con un solo comando.
+    > sudo adduser --home /userdata/trabajador4 --ingroup informatica trabajador4
+
+7. Saca a trabajador2 del grupo informática.
+    > sudo deluser trabajador2 informatica
+
+8. Muestra por pantalla la lista de TODOS los usuarios del sistema (solo el login).
+    > cut -d: -f1 /etc/passwd
+        -d: especifica que el delimitador de campo es el carácter “:”. Esto significa que el comando buscará dividir cada línea del archivo en campos usando “:” como separador. 
+        -f1 especifica que se debe extraer el primer campo de cada línea
+
+INSTALAR GIT 
+    > sudo apt install git-all
+    > or sudo dnf install git-all
+
+
+Actididad 2. FDISK Y FSTAB
+En una máquina GNU/Linux las particiones se especifican en el fichero /etc/fstab que contiene las
+informaciones que conciernen al montaje de las particiones que hay en el sistema, tanto las que se montarán
+en el arranque, como las que se montarán en otro momento de forma simplificada a petición del root u otro
+usuario. Vamos a aprender a trabajar con discos en Linux desde la terminal.
+Partimos de una MV Ubuntu Server 22.04:
+1. Añadimos un segundo disco de 10 GB desde VMWare
+    > 
+2. Desde la aplicación fdisk definimos:
+3. Tabla de particiones GPT
+4. Una partición con formato ext4 con todo el tamaño (10 GB)
+5. Montamos la partición en la carpeta /mnt/disk_tuapellido
+6. Creamos un archivo con nano en la carpeta /mnt/disk_tuapellido para comprobar que tenemos
+permisos de escritura.
+7. Editar el fichero fstab para que al reiniciar la máquina el disco se monte de forma automática
+8. Hay que confirmar que después de reiniciar la partición/disco sigue montado.
+DAM/DAW Distancia. Sistemas Informáticos. Tarea 6 (v1.0) Paco Cuadrado / Elías Portilla
+
+
+
+
+
+ACTIVIDAD 3. PERMISOS LINUX
+¿Cómo sería la cadena de permisos del fichero tarea.txt tras ejecutar secuencialmente los siguientes
+comandos?
+Rellena los huecos. NO ES NECESARIO REALIZAR CON ORDENADOR.
+$ chmod 750 tarea.txt
+- r w x r w x r w x
+-
+$ chmod o+rw tarea.txt
+- r w x r w x r w x
+-
+$ chmod go-w tarea.txt
+- r w x r w x r w x
+-
+$ chmod u+x,g+w tarea.txt
+- r w x r w x r w x
+-
+
+
+
+
+
+ACTIVIDAD 4. INSTALAR WEBMIN
+Webmin es una herramienta de configuración gráfica de sistemas, accesible vía web, para sistemas Unix, como
+GNU/Linux y OpenSolaris. Con él se pueden configurar aspectos internos de muchos sistemas libres, como el
+servidor web Apache, PHP, MySQL, DNS, Samba, DHCP, entre otros.
+Partimos de una máquina virtual Ubuntu Server 22.04:
+1. Instala la herramienta Webmin para poder controlar “gráficamente” tu servidor GNU/Linux.
+2. Configuración de Webmin:
+▪ Abre un navegador web y accede a https://tu-dominio-o-ip:10000.
+▪ Inicia sesión con las credenciales de tu usuario de Ubuntu.
+▪ Explora las diferentes opciones en la interfaz de Webmin:
+o Usuarios y Grupos: Crea un nuevo usuario y agrégalo a un grupo.
+o Actualizaciones del Sistema: Verifica si hay actualizaciones disponibles.
+o Servidores: Instala y configura MariaDB.
+o Copia de Seguridad: Explora y explica brevemente las posibilidades.
+3. Actividades de Configuración:
+▪ Crea un nuevo usuario llamado tuapellido1 con permisos de administrador en Webmin.
+▪ Tareas programadas: Explora y explica brevemente las posibilidades.
+▪ Firewall: Explora y explica brevemente las posibilidades.
+Recuerda documentar cada paso y verificar que todo funcione correctamente.
+
+
+
+
+
+ACTIVIDAD 5. TAREAS PROGRAMADAS
+Partimos de una máquina virtual Ubuntu Server 22.04:
+1. Crea un script que apague la máquina. Confirma que funciona.
+2. Realiza lo necesario para programar que el script se ejecuta todos los viernes a las 22:00.
+DAM/DAW Distancia. Sistemas Informáticos. Tarea 6 (v1.0) Paco Cuadrado / Elías Portilla
+P á g i n a 4 | 4
+RECURSOS
+Ubuntu manpage adduser:
+https://manpages.ubuntu.com/manpages/jammy/en/man8/adduser.8.html
+Ubuntu manpage fdisk:
+https://manpages.ubuntu.com/manpages/focal/es/man8/fdisk.8.html
+How To Install Webmin on Ubuntu 22.04
+https://www.digitalocean.com/community/tutorials/how-to-install-webmin-on-ubuntu-22-04
