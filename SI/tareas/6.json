@@ -59,16 +59,32 @@ en el arranque, como las que se montarán en otro momento de forma simplificada 
 usuario. Vamos a aprender a trabajar con discos en Linux desde la terminal.
 Partimos de una MV Ubuntu Server 22.04:
 1. Añadimos un segundo disco de 10 GB desde VMWare
-    > 
+    > he añadido el disco 10gb desde virtual vox
+    > cd /dev > ls sd*          (sda, sda1, sda2, sda3, sdb) <- esto es lo que se ve; !!! si añado un disco mas 5GB aparece disco sdc !!!
+    > sudo su                   (me convierto en usuario root)
+    > fdisk -l                  (me interesa en disco: Disk /dev/sdb: 10GIB)
+    > fdisk /dev/sdb            (entro en fdisk)
+        > g
+        > F                     (Con la opción “F” vemos el espacio en disco que tenemos sin particionar (10GB). )
+        > n
+        > 3 veces enter         (Created a new partition 1 of type 'Linux filesystem' and size 10 GIB)
+        > w                     (esribir los cambios y salir)
+    > mkfs.ext4 /dev/sdb1       (por que sdb1 no lo se)
+    > mkdir /disk_suzdalenko
+    > mount /dev/sdb1 /disk_suzdalenko
+    > nano /disk_suzdalenko/prueba.txt  (Creamos un archivo con nano en la carpeta /mnt/disk_tuapellido para comprobar que tenemos permisos de escritura.)
+    > nano /etc/fstab            (Editar el fichero fstab para que al reiniciar la máquina el disco se monte de forma automátic)
+    > ... /dev/sdb1 /disk_suzdalenko    (edito el fichero fstab)
+    > df -h                      (visualizar los discos y comprobar que esta todo en orden esto es punto 8 el que esta abajo)
+    > lsblk
+
 2. Desde la aplicación fdisk definimos:
 3. Tabla de particiones GPT
 4. Una partición con formato ext4 con todo el tamaño (10 GB)
 5. Montamos la partición en la carpeta /mnt/disk_tuapellido
-6. Creamos un archivo con nano en la carpeta /mnt/disk_tuapellido para comprobar que tenemos
-permisos de escritura.
+6. Creamos un archivo con nano en la carpeta /mnt/disk_tuapellido para comprobar que tenemos permisos de escritura.
 7. Editar el fichero fstab para que al reiniciar la máquina el disco se monte de forma automática
 8. Hay que confirmar que después de reiniciar la partición/disco sigue montado.
-DAM/DAW Distancia. Sistemas Informáticos. Tarea 6 (v1.0) Paco Cuadrado / Elías Portilla
 
 
 
@@ -77,19 +93,19 @@ DAM/DAW Distancia. Sistemas Informáticos. Tarea 6 (v1.0) Paco Cuadrado / Elías
 ACTIVIDAD 3. PERMISOS LINUX
 ¿Cómo sería la cadena de permisos del fichero tarea.txt tras ejecutar secuencialmente los siguientes
 comandos?
-Rellena los huecos. NO ES NECESARIO REALIZAR CON ORDENADOR.
+Rellena los huecos. 
 $ chmod 750 tarea.txt
 - r w x r w x r w x
--
+- r w x r - x - - -
 $ chmod o+rw tarea.txt
 - r w x r w x r w x
--
+- r w x r - x r w -
 $ chmod go-w tarea.txt
 - r w x r w x r w x
--
+- r w x r - x r - -
 $ chmod u+x,g+w tarea.txt
 - r w x r w x r w x
--
+- r w x r w x r - -
 
 
 
@@ -101,6 +117,7 @@ GNU/Linux y OpenSolaris. Con él se pueden configurar aspectos internos de mucho
 servidor web Apache, PHP, MySQL, DNS, Samba, DHCP, entre otros.
 Partimos de una máquina virtual Ubuntu Server 22.04:
 1. Instala la herramienta Webmin para poder controlar “gráficamente” tu servidor GNU/Linux.
+
 2. Configuración de Webmin:
 ▪ Abre un navegador web y accede a https://tu-dominio-o-ip:10000.
 ▪ Inicia sesión con las credenciales de tu usuario de Ubuntu.
@@ -109,6 +126,7 @@ o Usuarios y Grupos: Crea un nuevo usuario y agrégalo a un grupo.
 o Actualizaciones del Sistema: Verifica si hay actualizaciones disponibles.
 o Servidores: Instala y configura MariaDB.
 o Copia de Seguridad: Explora y explica brevemente las posibilidades.
+
 3. Actividades de Configuración:
 ▪ Crea un nuevo usuario llamado tuapellido1 con permisos de administrador en Webmin.
 ▪ Tareas programadas: Explora y explica brevemente las posibilidades.
@@ -122,7 +140,9 @@ Recuerda documentar cada paso y verificar que todo funcione correctamente.
 ACTIVIDAD 5. TAREAS PROGRAMADAS
 Partimos de una máquina virtual Ubuntu Server 22.04:
 1. Crea un script que apague la máquina. Confirma que funciona.
+
 2. Realiza lo necesario para programar que el script se ejecuta todos los viernes a las 22:00.
+
 DAM/DAW Distancia. Sistemas Informáticos. Tarea 6 (v1.0) Paco Cuadrado / Elías Portilla
 P á g i n a 4 | 4
 RECURSOS

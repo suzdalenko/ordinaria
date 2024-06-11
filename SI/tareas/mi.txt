@@ -1,0 +1,1 @@
+ubuntu añadir un usuario "x" y encluirle en el grupo "Y"

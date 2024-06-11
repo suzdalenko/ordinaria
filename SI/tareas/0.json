@@ -1,0 +1,34 @@
+windows server cambiar nombre del equipo:
+    > Win + R 
+    > sysdm.cpl
+
+    > Rename-Computer -NewName "NuevoNombreDelEquipo"
+    > Restart-Computer
+
+    mostar nombre equipo    > Win + R > sysdm.cpl
+                            > cmd > hostname
+                            > PowerShell > $env:COMPUTERNAME
+
+
+windows 10 cambiar el nombre del equipo
+    > Win + R
+    > sysdm.cpl
+
+
+ubuntu cambiar nombre del equipo
+    > sudo hostname nuevo_nombre
+    > sudo nano /etc/hostname
+    > sudo nano /etc/hosts
+    > sudo reboot
+
+    > hostname
+    > hostnamectl
+    > cat /etc/hostname
+    > cat /etc/hosts
+
+
+ubuntu eliminar usuario:
+    > sudo deluser usuario_ejemplo
+    > sudo deluser --remove-home usuario_ejemplo
+    > sudo deluser --remove-all-files usuario_ejemplo
+    > sudo deluser --remove-home juan
